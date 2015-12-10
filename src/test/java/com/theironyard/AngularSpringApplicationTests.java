@@ -21,37 +21,37 @@ import static org.junit.Assert.assertTrue;
 @WebAppConfiguration
 public class AngularSpringApplicationTests {
 
-    @Autowired
-    UserRepository users;
+	@Autowired
+	UserRepository users;
 
-    @Autowired
-    WebApplicationContext wap;
+	@Autowired
+	WebApplicationContext wap;
 
-    MockMvc mockMvc;
+	MockMvc mockMvc;
 
-    @Before
-    public void before() {
-        users.deleteAll();
-        mockMvc = MockMvcBuilders.webAppContextSetup(wap).build();
-    }
+	@Before
+	public void before() {
+		users.deleteAll();
+		mockMvc = MockMvcBuilders.webAppContextSetup(wap).build();
+	}
 
 	@Test
 	public void addUser() throws Exception {
-        User user = new User();
-        user.username = "Alice";
-        user.address = "17 Princess St";
-        user.email = "alice@theironyard.com";
+		User user = new User();
+		user.username = "Alice";
+		user.address = "17 Princess St";
+		user.email = "alice@theironyard.com";
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(user);
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(user);
 
-        mockMvc.perform(
-                MockMvcRequestBuilders.post("/user")
-                    .content(json)
-                    .contentType("application/json")
-        );
+		mockMvc.perform(
+				MockMvcRequestBuilders.post("/user")
+					.content(json)
+					.contentType("application/json")
+		);
 
-        assertTrue(users.count() == 1);
+		assertTrue(users.count() == 1);
 	}
 
 }
